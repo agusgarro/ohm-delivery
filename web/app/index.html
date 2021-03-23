@@ -5,16 +5,19 @@
         <script src="lib/angular/angular.js"></script>
         <script src="./main.js"></script>
         <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <title>Ohm Delivery</title>
     </head>
     <body>
         <div class="banner">
-            <h1>Ohm Delivery</h1>
+            <h1><i class="fas fa-truck"></i>Ohm Delivery</h1>
             <h2>Get shocked by the power</h2>
         </div>
         
         <div ng-app="ohm-delivery">
-            <form ng-controller="tracking" ng-submit="sendData()">
+            <div ng-controller="tracking">
+                <form ng-submit="get()">
+
                 <p>
                     <input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id"/>
                 </p>
@@ -22,9 +25,42 @@
                     <button id="formBtn" type="submit">Submit</button>
                 </p>
                 <p>
-                    <span ng-if="errorMessage">{{errorMessage}}</span>
+                    <span ng-if="errorMessage" >#{{errorMessage}}</span>
                 </p>
             </form>
-        </div>
-    </body>
+           
+             <div ng-if="result" class="result" >
+                 
+                 <b> Here are your results: </b>
+                 <h2>Welcome {{ohm.client.name}}</h2>
+                 
+				<h3>#{{result.trackingId}} (Status: {{result.status}})</h3>
+				<p ng-if="result.comment" class="comment">
+					<b>Comment:</b>{{result.comment}}
+				</p>
+				<p>
+					<b>Volts:</b>{{result.description.volts}}<br>
+					<b>Amperes:</b>{{result.description.amperes}}
+				</p>
+				<b>Tracking history: </b>
+				<ul>
+					<li ng-repeat="record in result.history">
+						<div><b>Status:</b> {{record.state}}</div>
+						<div><b>Date:</b> {{record.at * 1000 | date}}</div>
+					</li>
+				</ul>
+				<div ng-if="result.nextStatuses && result.nextStatuses.length">
+					<b>Update status:</b>
+					<ul>
+						<li ng-repeat="status in result.nextStatuses">
+							
+						</li>
+					</ul>
+				</div> 
+			</div>
+		</div>
+	</div>
+</body>
+
 </html>
+

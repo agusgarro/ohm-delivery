@@ -5,7 +5,7 @@ body {
 }
 
 .banner {
-    background-color: dodgerblue;
+    background-color: #cd7e63;
 }
 
 h1 {
@@ -13,6 +13,7 @@ h1 {
     margin: 0 auto;
     padding-top: 10px;
     text-align: center;
+    color: white;
 }
 
 h2 {
@@ -22,6 +23,7 @@ h2 {
     padding-bottom: 10px;
     text-align: center;
     font-style: italic;
+    color: white
 }
 
 input {
@@ -32,4 +34,8 @@ p {
     text-align: center;
     margin: auto;
     line-height: 2.0;
+}
+
+h3 {
+    color: red;
 }
