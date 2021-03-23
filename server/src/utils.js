@@ -10,12 +10,59 @@ const db = (async () => {
 })()
 
 async function getOhmById(id) {
-    const _db = await db;
-    const ohm = _db.get('ohms')
-        .find({ id })
-        .value()
-
-    return ohm;
+  const ohm = await findOhmById(id)
+  return ohm.value();
 }
 
-module.exports = { getOhmById }
+async function getOhmByTrackingId (trackingId) {
+  const _db = await db;
+  const ohm = _db.get('ohms')
+      .find({ trackingId })
+      .value()
+
+  return ohm;
+}
+
+async function updateOhm(trackingId, ohmInfo) {
+  const _db = await db;
+  const ohm = _db.get('ohms')
+    .find({ trackingId })
+    .assign({ ...ohmInfo })
+    .value()
+
+  await _db.write()
+  return ohm
+
+}
+  /*ohm delivery assignment, create a constant with the different statuses 
+  to be able to call them in next function.
+  */
+
+let STATUS_CHANGE = {
+  CREATED: 'PREPARING',
+  PREPARING: 'READY',
+  READY: 'IN_DELIVERY',
+  IN_DELIVERY: ['DELIVERED', 'REFUSED']
+}
+
+//to change the state of the status for the immediate next one, except in_delivery: 
+
+function letStatusChange (oldStatus, newStatus) {
+  if (!STATUS_CHANGE[oldStatus] || !newStatus) {
+      return false
+    }
+  
+    if (typeof STATUS_CHANGE[oldStatus] == 'string' && STATUS_CHANGE[oldStatus] != newStatus) {
+      return false
+    }
+  
+    if (typeof STATUS_CHANGE[oldStatus] == 'object' && STATUS_CHANGE[oldStatus].includes(newStatus)) {
+        console.log(STATUS_CHANGE);
+      return false
+    }
+  
+    return true
+   
+  }
+  
+module.exports = { getOhmById , getOhmByTrackingId , updateOhm, letStatusChange}
