@@ -1,5 +1,15 @@
 
 # OHM DELIVERY
+
+server:
+I did all the logic in index.js and utils due to time constrain.  I would have like to do it with routes in order for it to be more concise. 
+use GET request to find ohm and put to update ohm status. Imported json file to my local mongo.
+Was a little bit complicated to understand the logic of the project without proper models and routes, but I did what I could with my knowledge and time restrictions.
+
+web:
+I would have liked to use components, but as I work with react and was my first time working with angular I decided to keep it simple and do it in main.js and rendering in html. 
+What I could do is connect the web with the server via http request, retrieve all the data from the server, including history of the client and status of the delivery. 
+
 ohm-delivery is a minimalistic project that you have to improve and build. 
 
 The final customer receive the following trackingId `1e62adfe` by email and a link to the tracking page. 
